@@ -96,3 +96,6 @@ ENV/
 
 # IDEA
 .idea/
+sparse_checkpoint/
+sparse_tensorboard/
+sparse_model/

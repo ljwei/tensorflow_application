@@ -41,12 +41,9 @@ def define_flags():
   flags.DEFINE_string("label_type", "int", "The type of label")
   flags.DEFINE_float("learning_rate", 0.01, "The learning rate")
   flags.DEFINE_integer("epoch_number", 10, "Number of epochs to train")
-  flags.DEFINE_integer("batch_size", 1024, "The batch size of training")
-  flags.DEFINE_integer("train_batch_size", 64, "The batch size of training")
-  flags.DEFINE_integer("validation_batch_size", 64,
+  flags.DEFINE_integer("train_batch_size", 1024, "The batch size of training")
+  flags.DEFINE_integer("validation_batch_size", 1024,
                        "The batch size of training")
-  flags.DEFINE_integer("validate_batch_size", 1024,
-                       "The batch size of validation")
   flags.DEFINE_integer("batch_thread_number", 1,
                        "Number of threads to read data")
   flags.DEFINE_integer("min_after_dequeue", 100,
