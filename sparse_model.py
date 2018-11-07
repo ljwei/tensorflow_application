@@ -99,7 +99,7 @@ def dnn_inference(sparse_ids, sparse_values, is_train=True, FLAGS=None):
 def lr_inference(sparse_ids, sparse_values, is_train=True, FLAGS=None):
   with tf.variable_scope("logistic_regression"):
     layer = sparse_full_connect(sparse_ids, sparse_values,
-                                [FLAGS.input_units, FLAGS.label_size],
+                                [FLAGS.feature_size, FLAGS.label_size],
                                 [FLAGS.label_size], is_train, FLAGS)
   return layer
 
