@@ -41,8 +41,8 @@ def define_flags():
   flags.DEFINE_string("label_type", "int", "The type of label")
   flags.DEFINE_float("learning_rate", 0.01, "The learning rate")
   flags.DEFINE_integer("epoch_number", 10, "Number of epochs to train")
-  flags.DEFINE_integer("train_batch_size", 1024, "The batch size of training")
-  flags.DEFINE_integer("validation_batch_size", 1024,
+  flags.DEFINE_integer("train_batch_size", 128, "The batch size of training")
+  flags.DEFINE_integer("validation_batch_size", 128,
                        "The batch size of training")
   flags.DEFINE_integer("batch_thread_number", 1,
                        "Number of threads to read data")
@@ -213,12 +213,20 @@ def main():
         staircase=True)
   else:
     learning_rate = FLAGS.learning_rate
+
+  train_op_set = []
   optimizer = util.get_optimizer_by_name(FLAGS.optimizer, learning_rate)
-  train_op = optimizer.minimize(loss, global_step=global_step)
+  train_op1 = optimizer.minimize(loss, global_step=global_step)
+  train_op_set.append(train_op1)
+  optimizer2 = util.get_optimizer_by_name("ftrl", learning_rate)
+  train_op2 = optimizer2.minimize(loss, global_step=global_step)
+  train_op_set.append(train_op2)
+  train_op = tf.group(*train_op_set)
   tf.get_variable_scope().reuse_variables()
 
   # Define accuracy op for train data
   train_accuracy_logits = inference(batch_ids, batch_values, False)
+
   train_softmax = tf.nn.softmax(train_accuracy_logits)
   train_correct_prediction = tf.equal(
       tf.argmax(train_softmax, 1), batch_labels)

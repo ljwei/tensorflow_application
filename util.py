@@ -29,7 +29,7 @@ def get_optimizer_by_name(optimizer_name, learning_rate):
   elif optimizer_name == "adam":
     optimizer = tf.train.AdamOptimizer(learning_rate)
   elif optimizer_name == "ftrl":
-    optimizer = tf.train.FtrlOptimizer(learning_rate)
+    optimizer = tf.train.FtrlOptimizer(learning_rate, l1_regularization_strength=0.5)
   elif optimizer_name == "rmsprop":
     optimizer = tf.train.RMSPropOptimizer(learning_rate)
   else:
