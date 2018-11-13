@@ -40,7 +40,7 @@ def define_flags():
   flags.DEFINE_integer("label_size", 2, "Number of label size")
   flags.DEFINE_string("label_type", "int", "The type of label")
   flags.DEFINE_float("learning_rate", 0.01, "The learning rate")
-  flags.DEFINE_integer("epoch_number", 10, "Number of epochs to train")
+  flags.DEFINE_integer("epoch_number", 1, "Number of epochs to train")
   flags.DEFINE_integer("train_batch_size", 128, "The batch size of training")
   flags.DEFINE_integer("validation_batch_size", 128,
                        "The batch size of training")
@@ -214,14 +214,8 @@ def main():
   else:
     learning_rate = FLAGS.learning_rate
 
-  train_op_set = []
   optimizer = util.get_optimizer_by_name(FLAGS.optimizer, learning_rate)
-  train_op1 = optimizer.minimize(loss, global_step=global_step)
-  train_op_set.append(train_op1)
-  optimizer2 = util.get_optimizer_by_name("ftrl", learning_rate)
-  train_op2 = optimizer2.minimize(loss, global_step=global_step)
-  train_op_set.append(train_op2)
-  train_op = tf.group(*train_op_set)
+  train_op = optimizer.minimize(loss, global_step=global_step)
   tf.get_variable_scope().reuse_variables()
 
   # Define accuracy op for train data
